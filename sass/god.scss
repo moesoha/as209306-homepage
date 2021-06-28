@@ -1,0 +1,27 @@
+@import 'god/var.scss';
+
+@import 'god/font.scss', 'god/basic.scss';
+@import 'god/nav.scss';
+
+body > .world {
+	max-width: 1000px;
+	min-height: 600px;
+	box-sizing: border-box;
+	margin: 1rem auto .75rem;
+	display: flex;
+	flex-direction: column;
+	
+	@media screen and (max-width: 1024px) {
+		margin-left: .5rem;
+		margin-right: .5rem;
+	}
+}
+
+header {
+	& > h1 {
+		margin-bottom: .125em;
+	}
+	& > p {
+		margin-top: 0;
+	}
+}

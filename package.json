@@ -1,0 +1,23 @@
+{
+  "name": "as209306-pages",
+  "version": "1.0.0",
+  "author": "Soha Jin <soha@lohu.info>",
+  "license": "MIT",
+  "scripts": {
+    "build": "gulp",
+    "watch": "gulp watch",
+    "clean": "gulp clean",
+    "tasks": "gulp --tasks"
+  },
+  "devDependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "gulp": "^4.0.2",
+    "gulp-clean": "^0.4.0",
+    "gulp-font-spider": "^0.3.6",
+    "gulp-sass": "^5.0.0",
+    "gulp-twig": "^1.2.0",
+    "sass": "^1.35.1",
+    "through2": "^4.0.2",
+    "yaml": "^1.10.2"
+  }
+}

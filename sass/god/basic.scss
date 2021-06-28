@@ -1,0 +1,64 @@
+@import 'god/var.scss';
+
+html, body {
+	margin: 0;
+	padding: 0;
+	font-size: $root-size;
+	background-color: #fbfbfb;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: .75em 0;
+}
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.8em; }
+h3 { font-size: 1.5em; }
+h4 { font-size: 1.35em; }
+h5 { font-size: 1.2em; }
+h6 { font-size: 1em; }
+small { font-size: .75em; }
+small.very { font-size: .5em; }
+
+a {
+	color: #148fd7;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+p, li {
+	line-height: $line-height;
+}
+
+p {
+	margin: .75em 0;
+}
+
+code {
+	border-bottom: 1px dotted #888;
+}
+
+::selection {
+	color: #fff;
+	background-color: #00007b;
+}
+
+header {
+	text-align: center;
+	border: 3px solid $color-highlight;
+}
+
+main {
+	flex: 1;
+	padding: .5rem .75rem;
+}
+
+footer {
+	text-align: center;
+	font-size: .5rem;
+	border-top: $border-division;
+	padding: 6px 0;
+}

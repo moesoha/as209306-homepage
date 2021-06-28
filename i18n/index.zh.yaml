@@ -1,0 +1,13 @@
+Peering: 对等互联
+Contact: 联系方式
+Joined IXPs: 加入的 IX
+"SohaNET (a.k.a. Soha Jin's Network) is an education &amp; research network operated by a person called Soha Jin. It has PoPs in Jinhua, Hong Kong, Taoyuan, Amsterdam.": >
+    SohaNET（又名 Soha Jin 的网络、嗖蛤网）是一个由 Soha Jin 运营的教育和科研网络。这个网络在金华、香港、桃园、阿姆斯特丹有部署 PoP（出现点）。
+"I peer with route servers at Internet Exchange Points all the time and send identical routes with general peerings. However, setting up a private peering session at IXPs is always welcome.": >
+    我总是在互联网交换点（IX）给路由服务器（Route Server）发送和普通的对等互联一致的路由。不过设置私有的对等互联会话总是欢迎的。
+"If you wish to establish the session via a tunnel (WireGuard, GRE, etc.), please contact me via email addresses listed below. This is selected and I only do when I think that makes sense.": >
+    如果您想要通过隧道（例如 WireGuard、GRE 之类）与本网建立 BGP 会话，请使用下面写出的邮箱联系我。这个互联方式是选择性的，我只会在觉得它有意义的时候才会这么做。
+"For your convenience, here is some information about peering.": >
+    为了您的方便，下面是一些和对等互联相关的信息。
+"To get in touch with me, you can send mail to <code>orz.soha@gmail.com</code> <i>(general information)</i> or <code>orz.soha+abuse@gmail.com</code> <i>(for abuse information)</i>.": >
+    您可以通过 <code>orz.soha@gmail.com</code>（一般信息）或者 <code>orz.soha+abuse@gmail.com</code>（投诉相关）与我联络。

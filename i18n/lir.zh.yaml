@@ -1,0 +1,13 @@
+What is provided?: 有啥？
+How much is it?: 多贵？
+"I'm providing RIPE NCC LIR services with Kirino LLC. If you have requirements about AS numbers, IPv6 addresses, feel free to contact me at <code>orz.soha@gmail.com</code>.": >
+    我同 Kirino LLC 合作提供 RIPE NCC 的大会员服务。如果您有关于自治系统号码（ASN）、IPv6 地址的需求，或有什么疑问，请使用 <code>orz.soha@gmail.com</code> 联系我。
+Autonomous number (ASN) registered at RIPE NCC: 在 RIPE NCC 注册的自治系统号码（ASN）
+IPv6 addresses/prefixes allocated at RIPE NCC: 在 RIPE NCC 分配的 IPv6 地址前缀
+"Autonomous number (ASN) is 75 USD one-time, no further fee will be charged. A free /48 IPv6 subnet is bundled with the ASN.": >
+    自治系统号码（ASN）一次性付款 75 美元，之后不会有任何收费项。同时随 ASN 附送一段大小为 /48 的 IPv6 地址前缀。
+"IPv6 prefix is charged yearly:": IPv6 地址前缀的价格是年付的：
+/48 -&gt; 5 USD per year: /48 为 5 美元每年
+/44 -&gt; 30 USD per year: /44 为 30 美元每年
+"For larger address spaces, please contact me for more information.": 如果您有更大的地址需求，请与我联系获取详细信息。
+"You can pay by PayPal, Alipay, WeChat Pay.": 您可以使用 PayPal、支付宝、微信支付来付款。

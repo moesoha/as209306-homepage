@@ -1,0 +1,48 @@
+@import 'god/var.scss';
+
+nav {
+	display: flex;
+	flex-flow: row nowrap;
+
+	> * {
+		color: #232323;
+		display: block;
+		padding: .2em .875em;
+		text-decoration: none;
+
+		&:hover {
+			cursor: pointer;
+			background-color: $color-highlight;
+			color: #e0e0e0;
+			text-decoration: none;
+		}
+
+		&.placeholder {
+			content: '';
+			flex: 1;
+			pointer-events: none;
+		}
+	}
+
+	header + & {
+		font-weight: bold;
+		border-bottom: $border-division;
+	
+		> * {
+			border-right: $border-division;
+			&:last-child {
+				border-right: unset;
+			}
+		}
+	}
+	main + & {
+		border-top: $border-division;
+	
+		> * {
+			border-left: $border-division;
+			&:first-child {
+				border-left: unset;
+			}
+		}
+	}
+}
