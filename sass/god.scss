@@ -29,3 +29,16 @@ header {
 		margin-top: 0;
 	}
 }
+
+nav > * {
+	@media screen and (max-width: 460px) {
+		&.wide {
+			display: none;
+		}
+	}
+	@media screen and (min-width: 461px) {
+		&.narrow {
+			display: none;
+		}
+	}
+}
