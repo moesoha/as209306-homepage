@@ -7,7 +7,8 @@
     "build": "gulp",
     "watch": "gulp watch",
     "clean": "gulp clean",
-    "tasks": "gulp --tasks"
+    "tasks": "gulp --tasks",
+    "postinstall": "patch-package --patch-dir .patch"
   },
   "devDependencies": {
     "cheerio": "^1.0.0-rc.10",
@@ -16,6 +17,8 @@
     "gulp-font-spider": "^0.3.6",
     "gulp-sass": "^5.0.0",
     "gulp-twig": "^1.2.0",
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0",
     "sass": "^1.35.1",
     "through2": "^4.0.2",
     "yaml": "^1.10.2"
