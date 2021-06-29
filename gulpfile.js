@@ -3,10 +3,11 @@ const config = {
 	defaultLang: 'en',
 	i18nPath: './i18n/',
 	i18nAttrs: ['title', 'class'],
-	isProduction: process.env.NODE_ENV === 'production'
+	isProduction: process.env.NODE_ENV === 'production' || (process.argv.indexOf('--prod') > -1)
 };
 
 const { src, dest, series, parallel, watch } = require('gulp');
+const gulpHtmlMinify = require('gulp-htmlmin');
 const gulpFontSpider = require('gulp-font-spider');
 const gulpTwig = require('gulp-twig');
 const gulpSass = require('gulp-sass')(require('sass'));
@@ -18,28 +19,30 @@ const path = require('path');
 const fs = require('fs');
 
 const taskCleanUpPreviousBuild = () => src(['./dist', './build'], { read: false, allowEmpty: true }).pipe(clean());
-taskCleanUpPreviousBuild.displayName = 'clean:build';
+taskCleanUpPreviousBuild.displayName = 'clean';
 
-const taskCleanUpOriginalFonts = () => src('./dist/**/.font-spider', { read: false }).pipe(clean());
-taskCleanUpOriginalFonts.displayName = 'clean:original-fonts';
+const taskMinifyHtml = () => src('./dist/**/*.html').pipe(gulpHtmlMinify({ collapseWhitespace: true })).pipe(dest('./dist/'));
+taskMinifyHtml.displayName = 'minify:html';
 
 const taskCopyPublicFiles = () => src('./public/**').pipe(dest('./dist/'));
 taskCopyPublicFiles.displayName = 'copy:public';
 
-const taskCopyAssets = () => src('./assets/**').pipe(dest('./dist/assets/'));
-taskCopyAssets.displayName = 'copy:assets';
-
-const taskFonts = () => src('./fonts/**').pipe(dest('./dist/fonts/'));
-taskFonts.displayName = 'copy:fonts';
+const taskCopyFonts = () => src('./fonts/**').pipe(dest('./dist/fonts/'));
+taskCopyFonts.displayName = 'copy:fonts';
 
 const taskFontSpider = () => src('./dist/*.html')
-	.pipe(gulpFontSpider({ silent: false }))
+	.pipe(gulpFontSpider({
+		silent: false,
+		backup: false
+	}))
 	.pipe(dest('./dist/'))
 ;
 taskFontSpider.displayName = 'font-spider';
 
 const taskSass = () => src('./sass/*.{scss,sass}')
-	.pipe(gulpSass())
+	.pipe(gulpSass({
+		outputStyle: config.isProduction ? 'compressed' : undefined
+	}))
 	.pipe(dest('./dist/css/'))
 ;
 taskSass.displayName = 'compile:sass';
@@ -71,49 +74,40 @@ const GeneratorOfI18nTasks = compileLang => {
 	const taskI18nCompile = () => src('./templates/**/*.twig')
 		.pipe(through.obj(function (file, _, callback) {
 			if (file.isBuffer()) {
-				if (compileLang === config.defaultLang) {
-					this.push(file);
-					callback();
-					return;
-				}
 				const html = file.contents.toString();
 				let lang = {};
 				try {
 					lang = YAML.parse(fs.readFileSync(config.i18nPath + getI18nName(file.basename, compileLang, 'yaml'), 'utf-8'));
 				} catch (_) {}
 				const $ = cheerio.load(html, { decodeEntities: false }, html.toUpperCase().startsWith('<!DOCTYPE') || html.toLowerCase().startsWith('<html'));
-				const i18nElements = $(['[i18n]', '[i18n-if]', '[i18n-key]', ...config.i18nAttrs.map(s => `[i18n-${s}]`)].join(',')).map((_, e) => e).get();
+				const i18nElements = $(['[i18n]', '[i18n-key]', ...config.i18nAttrs.map(s => `[i18n-${s}]`)].join(',')).map((_, e) => e).get();
 				for(let i in i18nElements) {
 					const e = i18nElements[i];
 					let val;
-					if (typeof $(e).attr('i18n') === 'string') {
-						val = lang[$(e).html().trim()];
-						if (val) {
-							$(e).html(val);
-						}
-					} else if ($(e).attr('i18n-key')) {
-						val = lang[$(e).attr('i18n-key')];
-						if (val) {
-							$(e).html(val);
+					if (compileLang !== config.defaultLang) {
+						if (typeof $(e).attr('i18n') === 'string') {
+							val = lang[$(e).html().trim()];
+							if (val) {
+								$(e).html(val);
+							}
+						} else if ($(e).attr('i18n-key')) {
+							val = lang[$(e).attr('i18n-key')];
+							if (val) {
+								$(e).html(val);
+							}
 						}
 					}
 					$(e).removeAttr('i18n').removeAttr('i18n-key');
 
 					config.i18nAttrs.forEach(attr => {
-						const val = $(e).attr(`i18n-${attr}`);
-						if (val) {
-							$(e).attr(attr, lang[val] || val);
+						if (compileLang !== config.defaultLang) {
+							const val = $(e).attr(`i18n-${attr}`);
+							if (val) {
+								$(e).attr(attr, lang[val] || val);
+							}
 						}
 						$(e).removeAttr(`i18n-${attr}`);
 					});
-
-					if (typeof $(e).attr('i18n-if') === 'string') {
-						if ($(e).attr('i18n-if') === compileLang) {
-							$(e).removeAttr('i18n-if');
-						} else {
-							$(e).remove();
-						}
-					}
 				}
 				const f = file.clone();
 				f.contents = Buffer.from($.html());
@@ -194,24 +188,19 @@ const taskI18nExtractKeys = () => src('./templates/**/*.twig')
 
 const TasksDefault = [
 	parallel(
-		taskCopyAssets,
-		taskFonts,
+		taskCopyFonts,
 		taskCopyPublicFiles,
 		taskSass,
 		...config.langs.map(lang => GeneratorOfI18nTasks(lang))
 	),
-	taskFontSpider,
-	taskCleanUpOriginalFonts
+	taskFontSpider
 ];
-// if (config.isProduction) {
-// 	TasksDefault.push(parallel(
-// 		cssMinify,
-// 		htmlMinify
-// 	));
-// }
+if (config.isProduction) {
+	TasksDefault.push(taskMinifyHtml);
+}
 
 exports.default = series(...TasksDefault);
-exports.clean = taskCleanUpPreviousBuild;
+exports['clean'] = taskCleanUpPreviousBuild;
 exports['i18n:extract'] = taskI18nExtractKeys;
 
 // exports.watch = series(

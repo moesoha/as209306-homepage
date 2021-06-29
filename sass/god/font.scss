@@ -1,32 +1,44 @@
-@font-face {
+@font-face { // DinkieBitmap 9px Regular
 	font-family: 'DinkieBitmap 9px Web';
 	font-style: normal;
 	font-weight: 400;
 	src: url('../fonts/DinkieBitmap-9px.eot');
 	src:
+		url('../fonts/DinkieBitmap-9px.eot?#font-spider') format('embedded-opentype'),
+		url('../fonts/DinkieBitmap-9px.woff2') format('woff2'),
+		url('../fonts/DinkieBitmap-9px.woff') format('woff'),
 		url('../fonts/DinkieBitmap-9px.ttf') format('truetype'),
 		url('../fonts/DinkieBitmap-9px.svg') format('svg');
 }
-@font-face {
+@font-face { // DinkieBitmap 9px Bold
 	font-family: 'DinkieBitmap 9px Web';
 	font-style: normal;
 	font-weight: bold;
 	src: url('../fonts/DinkieBitmap-9px-SohaBold.eot');
 	src:
+		url('../fonts/DinkieBitmap-9px-SohaBold.eot?#font-spider') format('embedded-opentype'),
+		url('../fonts/DinkieBitmap-9px-SohaBold.woff2') format('woff2'),
+		url('../fonts/DinkieBitmap-9px-SohaBold.woff') format('woff'),
 		url('../fonts/DinkieBitmap-9px-SohaBold.ttf') format('truetype'),
 		url('../fonts/DinkieBitmap-9px-SohaBold.svg') format('svg');
 }
-@font-face {
+@font-face { // DinkieBitmap 9px Italic
 	font-family: 'DinkieBitmap 9px Web';
 	font-style: italic;
 	font-weight: 400;
 	src: url('../fonts/DinkieBitmap-9pxItalic.eot');
 	src:
+		url('../fonts/DinkieBitmap-9pxItalic.eot?#font-spider') format('embedded-opentype'),
+		url('../fonts/DinkieBitmap-9pxItalic.woff2') format('woff2'),
+		url('../fonts/DinkieBitmap-9pxItalic.woff') format('woff'),
 		url('../fonts/DinkieBitmap-9pxItalic.ttf') format('truetype'),
 		url('../fonts/DinkieBitmap-9pxItalic.svg') format('svg');
 }
-@font-face {
+
+@font-face { // DinkieBitmap 9px Code
 	font-family: 'DinkieBitmap 9px Code Web';
+	font-style: normal;
+	font-weight: 400;
 	src: url('../fonts/DinkieBitmap-9pxCode.eot');
 	src:
 		url('../fonts/DinkieBitmap-9pxCode.eot?#font-spider') format('embedded-opentype'),
@@ -34,15 +46,11 @@
 		url('../fonts/DinkieBitmap-9pxCode.woff') format('woff'),
 		url('../fonts/DinkieBitmap-9pxCode.ttf') format('truetype'),
 		url('../fonts/DinkieBitmap-9pxCode.svg') format('svg');
-	font-style: italic;
 }
 
 html, body {
-	font-family: 'DinkieBitmap 9px';
-	font-family: 'DinkieBitmap 9px Web';
-	/* font-family: Georgia, -apple-system, 'Nimbus Roman No9 L', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'ST Heiti', serif; */
+	font-family: 'DinkieBitmap 9px Web', 'SimSun', serif;
 }
-
 code {
-	font-family: 'DinkieBitmap 9px Code Web';
+	font-family: 'DinkieBitmap 9px Code Web', monospace;
 }
