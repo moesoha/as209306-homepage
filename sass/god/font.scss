@@ -1,5 +1,6 @@
 @font-face { // DinkieBitmap 9px Regular
 	font-family: 'DinkieBitmap 9px Web';
+	font-display: block;
 	font-style: normal;
 	font-weight: 400;
 	src: url('../fonts/DinkieBitmap-9px.eot');
@@ -12,6 +13,7 @@
 }
 @font-face { // DinkieBitmap 9px Bold
 	font-family: 'DinkieBitmap 9px Web';
+	font-display: block;
 	font-style: normal;
 	font-weight: bold;
 	src: url('../fonts/DinkieBitmap-9px-SohaBold.eot');
@@ -24,6 +26,7 @@
 }
 @font-face { // DinkieBitmap 9px Italic
 	font-family: 'DinkieBitmap 9px Web';
+	font-display: block;
 	font-style: italic;
 	font-weight: 400;
 	src: url('../fonts/DinkieBitmap-9pxItalic.eot');
@@ -37,6 +40,7 @@
 
 @font-face { // DinkieBitmap 9px Code
 	font-family: 'DinkieBitmap 9px Code Web';
+	font-display: block;
 	font-style: normal;
 	font-weight: 400;
 	src: url('../fonts/DinkieBitmap-9pxCode.eot');
