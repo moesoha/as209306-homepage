@@ -32,13 +32,13 @@ header {
 
 nav > * {
 	@media screen and (max-width: 460px) {
-		&.wide {
-			display: none;
-		}
-	}
-	@media screen and (min-width: 461px) {
-		&.narrow {
-			display: none;
+		&.shrinkable {
+			& > span {
+				display: none;
+			}
+			&::after {
+				content: attr(data-narrow);
+			}
 		}
 	}
 }

@@ -2,7 +2,10 @@ const config = {
 	langs: ['zh', 'en'],
 	defaultLang: 'en',
 	i18nPath: './i18n',
-	isProduction: process.env.NODE_ENV === 'production' || (process.argv.indexOf('--prod') > -1)
+	isProduction: process.env.NODE_ENV === 'production' || (process.argv.indexOf('--prod') > -1),
+	yaml: {
+		stringify: { indent: 4 }
+	}
 };
 
 const { src, dest, series, parallel, watch } = require('gulp');
@@ -94,7 +97,7 @@ const GeneratorOfI18nTasks = (compileLang, extractKey = false) => {
 			for (let [filename, keys] of Object.entries(I18nStrings)) {
 				this.push(new Vinyl({
 					path: filename,
-					contents: Buffer.from(YAML.stringify(keys), 'utf-8')
+					contents: Buffer.from(YAML.stringify(keys, config.yaml.stringify), 'utf-8')
 				}));
 			}
 			this.push(null);

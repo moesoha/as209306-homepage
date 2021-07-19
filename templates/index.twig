@@ -1,12 +1,20 @@
 {% extends "_layout.twig" %}
 
 {% block main %}
-	<p i18n>SohaNET (a.k.a. Soha Jin's Network) is an education & research network operated by a person called Soha Jin. It has PoPs in Jinhua, Hong Kong, Taoyuan, Amsterdam.</p>
+	<p>{% trans %}
+		SohaNET (a.k.a. Soha Jin's Network) is an education &amp; research network operated by a person called Soha Jin. It has PoPs in Jinhua, Hong Kong, Taoyuan, Amsterdam.
+	{% endtrans %}</p>
 
-	<h3 i18n>Peering</h3>
-	<p i18n>I peer with route servers at Internet Exchange Points all the time and send identical routes with general peerings. However, setting up a private peering session at IXPs is always welcome.</p>
-	<p i18n>If you wish to establish the session via a tunnel (WireGuard, GRE, etc.), please contact me via email addresses listed below. This is selected and I only do when I think that makes sense.</p>
-	<p i18n>For your convenience, here is some information about peering.</p>
+	<h3>{{ 'Peering'|trans }}</h3>
+	<p>{% trans %}
+		I peer with route servers at Internet Exchange Points all the time and send identical routes with general peerings. However, setting up a private peering session at IXPs is always welcome.
+	{% endtrans %}</p>
+	<p>{% trans %}
+		If you wish to establish the session via a tunnel (WireGuard, GRE, etc.), please contact me via email addresses listed below. This is selected and I only do when I think that makes sense.
+	{% endtrans %}</p>
+	<p>{% trans %}
+		For your convenience, here is some information about peering.
+	{% endtrans %}</p>
 	<ul>
 		<li>ASN: <code>209306</code></li>
 		<li>AS-SET: <code>AS209306:AS-SET</code></li>
@@ -14,10 +22,12 @@
 		<li>Suggested prefix limit for IPv6: <code>10</code></li>
 	</ul>
 
-	<h3 i18n>Contact</h3>
-	<p i18n>To get in touch with me, you can send mail to <code>orz.soha@gmail.com</code> <i>(general information)</i> or <code>orz.soha+abuse@gmail.com</code> <i>(for abuse information)</i>.</p>
+	<h3>{{ 'Contact'|trans }}</h3>
+	<p>{% trans %}
+		To get in touch with me, you can send mail to <code>orz.soha@gmail.com</code> <i>(general information)</i> or <code>orz.soha+abuse@gmail.com</code> <i>(for abuse information)</i>.
+	{% endtrans %}</p>
 
-	<h3 i18n>Joined IXPs</h3>
+	<h3>{{ 'Joined IXPs'|trans }}</h3>
 	<ul>
 		<li>[CN] ZXIX Hangzhou</li>
 		<li>[HK] ZXIX Hong Kong</li>

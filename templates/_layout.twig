@@ -10,16 +10,12 @@
 		<div class="world">
 			<header>
 				<h1>AS209306 SohaNET</h1>
-				<p i18n>Personal & Educational & Experimental</p>
+				<p>{% trans %}Personal &amp; Educational &amp; Experimental{% endtrans %}</p>
 			</header>
 			<nav>
-				<a i18n href="{{ url('index.html') }}">Home</a>
-
-				<a i18n class="narrow" href="{{ url('lir.html') }}">LIR</a>
-				<a i18n class="wide" href="{{ url('lir.html') }}">LIR Service</a>
-				
-				<a i18n class="narrow" href="https://sohaj.in">Soha</a>
-				<a i18n class="wide" href="https://sohaj.in">About Soha</a>
+				<a href="{{ url('index.html') }}">{{ 'Home'|trans }}</a>
+				<a href="{{ url('lir.html') }}" class="shrinkable" data-narrow="{{ 'LIR'|trans }}"><span>{{ 'LIR Service'|trans }}</span></a>
+				<a href="{{ _lang == 'zh' ? 'https://jin.sh/' : 'https://sohaj.in/' }}" class="shrinkable" data-narrow="{{ 'Soha'|trans }}"><span>{{ 'About Soha'|trans }}</span></a>
 				
 				<div class="placeholder"></div>
 				{% if _lang == 'en' %} <a href="{{ i18nSwitch('zh') }}">中</a>
@@ -35,9 +31,9 @@
 				<a href="https://bgp.tools/as/209306">@BGP.Tools</a>
 				<a href="https://bgp.he.net/AS209306">@HE</a>
 			</nav>
-			<footer i18n>
-				&copy; 2021, SohaNET. Made by Soha Jin and the good old days. 
-			</footer>
+			<footer>{% trans %}
+				© 2021, SohaNET. Made by Soha Jin and the good old days. 
+			{% endtrans %}</footer>
 		</div>
 	</body>
 </html>
