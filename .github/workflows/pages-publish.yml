@@ -1,0 +1,62 @@
+name: Publish to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    env:
+      DEPLOY_DOMAIN: net.soha.space
+      COS_REGION: ap-shanghai
+      COS_BUCKET: soha-files-1251169906
+    runs-on: ubuntu-latest
+    steps:
+      # Preparing
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Download Fonts
+        uses: zkqiang/tencent-cos-action@v0.1.0
+        with:
+          secret_id: ${{ secrets.COS_SECRET_ID }}
+          secret_key: ${{ secrets.COS_SECRET_KEY }}
+          region: ${{ env.COS_REGION }}
+          bucket: ${{ env.COS_BUCKET }}
+          args: >
+            download DinkieBitmap/DinkieBitmap-9px.ttf ./fonts/ &&
+            download DinkieBitmap/DinkieBitmap-9pxCode.ttf ./fonts/ &&
+            download DinkieBitmap/DinkieBitmap-9pxItalic.ttf ./fonts/ &&
+            download DinkieBitmap/DinkieBitmap-9px-SohaBold.ttf ./fonts/
+
+      - name: Yarn install
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: install
+
+      # clean up
+      - name: Yarn clean
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: clean
+
+      # Build and Deploy
+      - name: Yarn build
+        uses: borales/actions-yarn@v2.3.0
+        env:
+          NODE_ENV: production
+        with:
+          cmd: build
+          
+      - name: Write CNAME file
+        run: |
+          echo $DEPLOY_DOMAIN | sudo tee dist/CNAME # why the owner of ./dist is root?
+
+      - name: Deploy pages
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: dist
