@@ -22,6 +22,10 @@
     "postinstall-postinstall": "^2.1.0",
     "sass": "^1.35.1",
     "through2": "^4.0.2",
+    "vinyl": "^2.2.1",
     "yaml": "^1.10.2"
+  },
+  "resolutions": {
+    "gulp-twig/twig": "^1.15.3"
   }
 }

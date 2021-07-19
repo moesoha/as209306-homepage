@@ -1,12 +1,12 @@
 const config = {
 	langs: ['zh', 'en'],
 	defaultLang: 'en',
-	i18nPath: './i18n/',
-	i18nAttrs: ['title', 'class'],
+	i18nPath: './i18n',
 	isProduction: process.env.NODE_ENV === 'production' || (process.argv.indexOf('--prod') > -1)
 };
 
 const { src, dest, series, parallel, watch } = require('gulp');
+const Vinyl = require('vinyl');
 const gulpHtmlMinify = require('gulp-htmlmin');
 const gulpFontSpider = require('gulp-font-spider');
 const gulpTwig = require('gulp-twig');
@@ -18,7 +18,7 @@ const YAML = require('yaml');
 const path = require('path');
 const fs = require('fs');
 
-const taskCleanUpPreviousBuild = () => src(['./dist', './build'], { read: false, allowEmpty: true }).pipe(clean());
+const taskCleanUpPreviousBuild = () => src('./dist', { read: false, allowEmpty: true }).pipe(clean());
 taskCleanUpPreviousBuild.displayName = 'clean';
 
 const taskMinifyHtml = () => src('./dist/**/*.html').pipe(gulpHtmlMinify({ collapseWhitespace: true })).pipe(dest('./dist/'));
@@ -45,7 +45,7 @@ const taskSass = () => src('./sass/*.{scss,sass}')
 	}))
 	.pipe(dest('./dist/css/'))
 ;
-taskSass.displayName = 'compile:sass';
+taskSass.displayName = 'sass:compile';
 
 const getI18nName = (orig, lang, ext) => {
 	const idxDot = orig.lastIndexOf('.');
@@ -66,62 +66,46 @@ const getI18nName = (orig, lang, ext) => {
 	const filename = idxDot < 1 ? orig : orig.substring(0, idxDot);
 	return filename + langName + extension;
 };
-const GeneratorOfI18nTasks = compileLang => {
-	const BuildDir = `./build/${compileLang}`;
-	const BuildDirAbsolute = path.resolve(__dirname, BuildDir);
-	const BuildTemplateDirAbsolute = path.resolve(BuildDirAbsolute, 'templates');
+const GeneratorOfI18nTasks = (compileLang, extractKey = false) => {
+	const I18nStrings = {};
+	const I18nGetString = (filename, s) => {
+		const key = s.trim();
+		const domain = getI18nName(filename, compileLang, 'yaml');
 
-	const taskI18nCompile = () => src('./templates/**/*.twig')
+		if (!I18nStrings[domain]) I18nStrings[domain] = {};
+		if (!I18nStrings[domain][key]) I18nStrings[domain][key] = '';
+
+		return I18nStrings[domain][key].trim() || key;
+	};
+
+	const taskLangFileLoad = () => src(config.i18nPath + '/*.' + compileLang + '.yaml')
 		.pipe(through.obj(function (file, _, callback) {
 			if (file.isBuffer()) {
-				const html = file.contents.toString();
-				let lang = {};
-				try {
-					lang = YAML.parse(fs.readFileSync(config.i18nPath + getI18nName(file.basename, compileLang, 'yaml'), 'utf-8'));
-				} catch (_) {}
-				const $ = cheerio.load(html, { decodeEntities: false }, html.toUpperCase().startsWith('<!DOCTYPE') || html.toLowerCase().startsWith('<html'));
-				const i18nElements = $(['[i18n]', '[i18n-key]', ...config.i18nAttrs.map(s => `[i18n-${s}]`)].join(',')).map((_, e) => e).get();
-				for(let i in i18nElements) {
-					const e = i18nElements[i];
-					let val;
-					if (compileLang !== config.defaultLang) {
-						if (typeof $(e).attr('i18n') === 'string') {
-							val = lang[$(e).html().trim()];
-							if (val) {
-								$(e).html(val);
-							}
-						} else if ($(e).attr('i18n-key')) {
-							val = lang[$(e).attr('i18n-key')];
-							if (val) {
-								$(e).html(val);
-							}
-						}
-					}
-					$(e).removeAttr('i18n').removeAttr('i18n-key');
-
-					config.i18nAttrs.forEach(attr => {
-						if (compileLang !== config.defaultLang) {
-							const val = $(e).attr(`i18n-${attr}`);
-							if (val) {
-								$(e).attr(attr, lang[val] || val);
-							}
-						}
-						$(e).removeAttr(`i18n-${attr}`);
-					});
-				}
-				const f = file.clone();
-				f.contents = Buffer.from($.html());
-				this.push(f);
+				I18nStrings[file.basename] = YAML.parse(file.contents.toString());
 			}
-			return callback();
+			callback();
 		}))
-		.pipe(dest(BuildDir + '/templates'))
 	;
-	taskI18nCompile.displayName = 'compile:i18n:' + compileLang;
+	taskLangFileLoad.displayName = 'i18n:load:' + compileLang;
 
-	const taskTwig = () => src([BuildDir + '/templates/**/*.twig', '!' + BuildDir + '/templates/**/_*.twig'])
+	const taskLangFileSave = () => (() => {
+		const src = require('stream').Readable({ objectMode: true });
+		src._read = function () {
+			for (let [filename, keys] of Object.entries(I18nStrings)) {
+				this.push(new Vinyl({
+					path: filename,
+					contents: Buffer.from(YAML.stringify(keys), 'utf-8')
+				}));
+			}
+			this.push(null);
+		};
+		return src;
+	})().pipe(dest(config.i18nPath));
+	taskLangFileSave.displayName = 'i18n:save:' + compileLang;
+
+	const taskTwig = () => src(['./templates/**/*.twig', '!./templates/**/_*.twig'])
 		.pipe(gulpTwig({
-			base: BuildTemplateDirAbsolute,
+			base: path.resolve(__dirname, 'templates'),
 			data: {
 				_lang: compileLang
 			},
@@ -130,10 +114,37 @@ const GeneratorOfI18nTasks = compileLang => {
 				func: args => getI18nName(args, compileLang) // FIXME: this is url
 			}, {
 				name: 'i18nSwitch',
-				func: function (args) {
-					return getI18nName(this.context._target.relative, args);
-				}
-			}]
+				func (args) { return getI18nName(this.context._target.relative, args); }
+			}],
+			filters: [{
+				name: 'trans',
+				func (s) { return I18nGetString(path.basename(this.template.path), s); }
+			}],
+			extend (Twig) {
+				Twig.exports.extendTag({
+					type: 'trans',
+        			regex: /^trans$/,
+					next: ['endtrans'],
+					open: true,
+					compile (token) {
+						delete token.match;
+						return token;
+					},
+					parse (token, context, chain) {
+						const text = this.parse(token.output, context).trim();
+						return {
+							chain,
+							output: I18nGetString(path.basename(this.template.path), text)
+						}
+					}
+				});
+				Twig.exports.extendTag({
+					type: 'endtrans',
+					regex: /^endtrans$/,
+					next: [],
+					open: false
+				});
+			}
 		}))
 		.pipe(through.obj(function (file, _, callback) {
 			if (file.isBuffer()) {
@@ -146,45 +157,14 @@ const GeneratorOfI18nTasks = compileLang => {
 		}))
 		.pipe(dest('./dist/'))
 	;
-	taskTwig.displayName = 'compile:twig:' + compileLang;
-	return series(taskI18nCompile, taskTwig);
-};
+	taskTwig.displayName = 'twig:compile:' + compileLang;
 
-const taskI18nExtractKeys = () => src('./templates/**/*.twig')
-	.pipe(through.obj(function (file, _, callback) {
-		if (file.isBuffer()) {
-			const $ = cheerio.load(file.contents.toString(), { decodeEntities: false });
-			const i18nElements = $(['[i18n]', '[i18n-key]', ...config.i18nAttrs.map(s => `[i18n-${s}]`)].join(',')).map((_, e) => e).get();
-			const keys = {};
-			for(let i in i18nElements) {
-				const e = i18nElements[i];
-				if (typeof $(e).attr('i18n') === 'string') {
-					keys[$(e).html().trim()] = '';
-				} else if ($(e).attr('i18n-key')) {
-					keys[$(e).attr('i18n-key')] = '';
-				}
-				config.i18nAttrs.forEach(attr => {
-					if ($(e).attr(`i18n-${attr}`)) {
-						keys[$(e).attr(`i18n-${attr}`)] = '';
-					}
-				});
-			}
-			config.langs.filter(s => s !== config.defaultLang).forEach(lang => {
-				const f = file.clone();
-				f.basename = getI18nName(file.basename, lang, 'yaml');
-				const newKeys = { ...keys };
-				try {
-					const old = YAML.parse(fs.readFileSync(config.i18nPath + f.basename, 'utf-8'));
-					Object.entries(old).forEach(([k, v]) => newKeys[k] = v);
-				} catch (_) {}
-				f.contents = Buffer.from(YAML.stringify(newKeys));
-				this.push(f);
-			});
-		}
-		return callback();
-	}))
-	.pipe(dest('./i18n/'))
-;
+	const tasks = [taskLangFileLoad, taskTwig];
+	if (extractKey) {
+		tasks.push(taskLangFileSave);
+	}
+	return series(...tasks);
+};
 
 const TasksDefault = [
 	parallel(
@@ -201,7 +181,10 @@ if (config.isProduction) {
 
 exports.default = series(...TasksDefault);
 exports['clean'] = taskCleanUpPreviousBuild;
-exports['i18n:extract'] = taskI18nExtractKeys;
+exports['i18n:extract'] = parallel(...config.langs
+	.filter(s => s !== config.defaultLang)
+	.map(lang => GeneratorOfI18nTasks(lang, true))
+);
 
 // exports.watch = series(
 // 	...TasksDefault,
