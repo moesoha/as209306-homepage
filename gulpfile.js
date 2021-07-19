@@ -15,11 +15,9 @@ const gulpFontSpider = require('gulp-font-spider');
 const gulpTwig = require('gulp-twig');
 const gulpSass = require('gulp-sass')(require('sass'));
 const clean = require('gulp-clean');
-const cheerio = require('cheerio');
 const through = require('through2');
 const YAML = require('yaml');
 const path = require('path');
-const fs = require('fs');
 
 const taskCleanUpPreviousBuild = () => src('./dist', { read: false, allowEmpty: true }).pipe(clean());
 taskCleanUpPreviousBuild.displayName = 'clean';
