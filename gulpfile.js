@@ -110,7 +110,8 @@ const GeneratorOfI18nTasks = (compileLang, extractKey = false) => {
 		.pipe(gulpTwig({
 			base: path.resolve(__dirname, 'templates'),
 			data: {
-				_lang: compileLang
+				_lang: compileLang,
+				_prod: config.isProduction
 			},
 			functions: [{
 				name: 'url',
