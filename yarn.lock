@@ -1477,6 +1477,23 @@ gulp-sass@^5.0.0:
     transfob "^1.0.0"
     vinyl-sourcemaps-apply "^0.2.1"
 
+"gulp-task-static-pages@https://github.com/moesoha/gulp-task-static-pages.git":
+  version "1.0.0"
+  resolved "https://github.com/moesoha/gulp-task-static-pages.git#ea64a2e2e76f6b93c72c8e35c7b0baa1bc3a9432"
+  dependencies:
+    gulp "^4.0.2"
+    gulp-clean "^0.4.0"
+    gulp-font-spider "^0.3.6"
+    gulp-htmlmin "^5.0.1"
+    gulp-sass "^5.0.0"
+    gulp-twig "^1.2.0"
+    patch-package "^6.4.7"
+    postinstall-postinstall "^2.1.0"
+    sass "^1.35.1"
+    through2 "^4.0.2"
+    vinyl "^2.2.1"
+    yaml "^1.10.2"
+
 gulp-twig@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/gulp-twig/-/gulp-twig-1.2.0.tgz#a36879bda142252d88bad196c78b8b8b5656475f"
@@ -1711,9 +1728,9 @@ is-ci@^2.0.0:
     ci-info "^2.0.0"
 
 is-core-module@^2.2.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.4.0.tgz#8e9fc8e15027b011418026e98f0e6f4d86305cc1"
-  integrity sha512-6A2fkfq1rfeQZjxrZJGerpLCTHRNEBiSgnu0+obeJpEPZRUooHgsizvzv0ZjJwOz3iWIHdJtVWJ/tmPr3D21/A==
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.5.0.tgz#f754843617c70bfd29b7bd87327400cda5c18491"
+  integrity sha512-TXCMSDsEHMEEZ6eCA8rwRDbLu55MRGmrctljsBX/2v1d9/GzqHOxW5c5oPSgrUt2vBFXebu9rGqckXGPWOlYpg==
   dependencies:
     has "^1.0.3"
 
@@ -2959,9 +2976,9 @@ safer-buffer@^2.0.2, safer-buffer@^2.1.0, safer-buffer@~2.1.0:
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
 sass@^1.35.1:
-  version "1.35.1"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.35.1.tgz#90ecf774dfe68f07b6193077e3b42fb154b9e1cd"
-  integrity sha512-oCisuQJstxMcacOPmxLNiLlj4cUyN2+8xJnG7VanRoh2GOLr9RqkvI4AxA4a6LHVg/rsu+PmxXeGhrdSF9jCiQ==
+  version "1.35.2"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.35.2.tgz#b732314fcdaf7ef8d0f1698698adc378043cb821"
+  integrity sha512-jhO5KAR+AMxCEwIH3v+4zbB2WB0z67V1X0jbapfVwQQdjHZUGUyukpnoM6+iCMfsIUC016w9OPKQ5jrNOS9uXw==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
 
@@ -3418,7 +3435,7 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
   integrity sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=
 
-twig@^1.10.5, twig@^1.15.3:
+twig@^1.10.5:
   version "1.15.4"
   resolved "https://registry.yarnpkg.com/twig/-/twig-1.15.4.tgz#314b00eaf98a57e70ed7dcfd6def93d0d8f3d627"
   integrity sha512-gRpGrpdf+MswqF6eSjEdYZTa/jt3ZWHK/NU59IbTYJMBQXJ1W+7IxaGEwLkQjd+mNT15j9sQTzQumxUBkuQueQ==
