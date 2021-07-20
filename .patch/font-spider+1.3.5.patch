@@ -1,0 +1,13 @@
+diff --git a/node_modules/font-spider/src/compressor/index.js b/node_modules/font-spider/src/compressor/index.js
+index ac6ea91..1916ace 100644
+--- a/node_modules/font-spider/src/compressor/index.js
++++ b/node_modules/font-spider/src/compressor/index.js
+@@ -138,7 +138,7 @@ Compress.prototype = {
+ 
+         fontmin.use(Fontmin.glyph({
+             trim: false,
+-            text: webFont.chars || '#' // 传入任意字符避免 fontmin@0.9.5 BUG
++            text: webFont.chars + ' '
+         }));
+ 
+ 

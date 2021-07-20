@@ -7,10 +7,12 @@
     "build": "gulp",
     "watch": "gulp watch",
     "clean": "gulp clean",
-    "tasks": "gulp --tasks"
+    "tasks": "gulp --tasks",
+    "postinstall": "patch-package --patch-dir .patch"
   },
   "devDependencies": {
     "gulp": "^4.0.2",
-    "gulp-task-static-pages": "https://github.com/moesoha/gulp-task-static-pages.git"
+    "gulp-task-static-pages": "https://github.com/moesoha/gulp-task-static-pages.git",
+    "postinstall-postinstall": "^2.1.0"
   }
 }

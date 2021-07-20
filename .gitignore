@@ -132,4 +132,4 @@ dist
 build
 
 # This is not a free font
-fonts/DinkieBitmap-*
+font/DinkieBitmap-*

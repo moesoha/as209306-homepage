@@ -27,10 +27,10 @@ jobs:
           region: ${{ env.COS_REGION }}
           bucket: ${{ env.COS_BUCKET }}
           args: >
-            download DinkieBitmap/DinkieBitmap-9px.ttf ./fonts/ &&
-            download DinkieBitmap/DinkieBitmap-9pxCode.ttf ./fonts/ &&
-            download DinkieBitmap/DinkieBitmap-9pxItalic.ttf ./fonts/ &&
-            download DinkieBitmap/DinkieBitmap-9px-SohaBold.ttf ./fonts/
+            download DinkieBitmap/DinkieBitmap-9px.ttf ./font/ &&
+            download DinkieBitmap/DinkieBitmap-9pxCode.ttf ./font/ &&
+            download DinkieBitmap/DinkieBitmap-9pxItalic.ttf ./font/ &&
+            download DinkieBitmap/DinkieBitmap-9px-SohaBold.ttf ./font/
 
       - name: Yarn install
         uses: borales/actions-yarn@v2.3.0
