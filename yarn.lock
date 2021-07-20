@@ -1479,7 +1479,7 @@ gulp-sass@^5.0.0:
 
 "gulp-task-static-pages@https://github.com/moesoha/gulp-task-static-pages.git":
   version "1.0.0"
-  resolved "https://github.com/moesoha/gulp-task-static-pages.git#ea64a2e2e76f6b93c72c8e35c7b0baa1bc3a9432"
+  resolved "https://github.com/moesoha/gulp-task-static-pages.git#b0789a1a5f0b167373ee156399e92e1ef9ba8b9f"
   dependencies:
     gulp "^4.0.2"
     gulp-clean "^0.4.0"
@@ -1488,7 +1488,6 @@ gulp-sass@^5.0.0:
     gulp-sass "^5.0.0"
     gulp-twig "^1.2.0"
     patch-package "^6.4.7"
-    postinstall-postinstall "^2.1.0"
     sass "^1.35.1"
     through2 "^4.0.2"
     vinyl "^2.2.1"
