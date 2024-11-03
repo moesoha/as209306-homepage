@@ -33,19 +33,19 @@ jobs:
             download DinkieBitmap/DinkieBitmap-9px-SohaBold.ttf ./font/
 
       - name: Yarn install
-        uses: borales/actions-yarn@v2.3.0
+        uses: borales/actions-yarn@v3.0.0
         with:
           cmd: install
 
       # clean up
       - name: Yarn clean
-        uses: borales/actions-yarn@v2.3.0
+        uses: borales/actions-yarn@v3.0.0
         with:
           cmd: clean
 
       # Build and Deploy
       - name: Yarn build
-        uses: borales/actions-yarn@v2.3.0
+        uses: borales/actions-yarn@v3.0.0
         env:
           NODE_ENV: production
         with:
