@@ -1,0 +1,23 @@
+# CIDR,ZZ,ZZ-AA,City,
+
+2a0e:aa06:400::/44,,,,
+2a0e:aa06:402::/48,JP,JP-13,Ota-ku,
+2a0e:aa06:402:4000::/56,JP,JP-14,Kawasaki-shi,
+2a0e:aa06:405::/48,GB,GB-SCB,West Linton,
+2a0e:aa06:406::/48,CN,CN-ZJ,Wenzhou,
+2a0e:aa06:40d::/48,CN,CN-SH,,
+2a0e:aa06:40e::/48,CN,CN-ZJ,Jinhua,
+
+2a13:1802::/36,,,,
+2a13:1802:10::/44,CN,CN-ZJ,Jinhua,
+2a13:1802:120::/44,JP,JP-13,Ota-ku,
+2a13:1802:260::/44,DE,DE-HE,Frankfurt am Main,
+2a13:1802:320::/44,CA,CA-AB,Calgary,
+2a13:1802:380::/44,US,US-CA,Los Angeles,
+
+2406:840:fee0::/44,,,,
+
+44.32.69.0/24,,,,
+44.32.69.64/28,CN,CN-ZJ,Jinhua,
+44.32.69.160/28,CN,CN-SH,,
+44.32.69.192/28,CN,CN-ZJ,Jinhua,
